@@ -1,5 +1,7 @@
 # PSZOI
 
+Practice task number 1 on the subject of PSZOI BSUIR. Create by Nikita Sharaev (aka Moon1705).
+
 ## Start
 
 Install Python3 and Pip3 on Debian Linux.
