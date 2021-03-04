@@ -1,9 +1,3 @@
-from module.Exp import Exp
-from module.G import G
-from module.N import N
-from module.R import R
-from module.TN import TN
-from module.W import W
 import math
 from functools import reduce
 from prettytable import PrettyTable
@@ -59,9 +53,3 @@ class PSZOI:
         for i in range(4):
             print(tables[i])
         print(f"T_1c = {int(self.T_1c * 0.001)}")
-
-
-if __name__ == '__main__':
-    input_data = [TN(59,19), Exp(44), TN(70,28), G(12,78), R(39), N(84,20), W(5,65), TN(57,17)]
-    pszoi = PSZOI(input_data)
-    pszoi.show()
