@@ -49,7 +49,6 @@ class PSZOI:
             tables[1].add_column(f"{i} * 10^(-5)", list(map(lambda x: int(round(x * 10000)), self.p[i])))
             tables[2].add_column(f"{i} * 10^(-5)", list(map(lambda x: round(x * 1000000, 3), self.f[i])))
             tables[3].add_column(f"{i} * 10^(-5)", list(map(lambda x: round(x * 1000000, 3), self.lambd[i])))
-        print("Вариант 10\n")
         for i in range(4):
             print(tables[i])
         print(f"T_1c = {int(self.T_1c * 0.001)}")
