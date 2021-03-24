@@ -28,7 +28,7 @@ class PSZOI:
     def __f_func(self):
         f = []
         for t in range(11):
-            t_i = t * 0.00001
+            t_i = t * 10000
             f_i = [element.f_func(t_i) for element in self.input_data]
             f.append(f_i + [sum(f_i)])
         return f
@@ -36,7 +36,12 @@ class PSZOI:
     def __lambd_func(self):
         lambd = []
         for t in range(11):
-            lambd_i = [self.f[t][i] / self.p[t][i] for i in range(len(self.input_data) + 1)]
+            t_i = t * 10000
+            p_i = [element.p_func(t_i) for element in self.input_data] 
+            p_i += [reduce(lambda x, y: x * y, p_i)]
+            f_i = [element.f_func(t_i) for element in self.input_data]
+            f_i += [sum(f_i)] 
+            lambd_i = [f_i[j] / p_i[j] for j in range(len(self.input_data) + 1)]
             lambd.append(lambd_i)
         return lambd
     
@@ -46,9 +51,9 @@ class PSZOI:
         tables[0].add_row(list(map(lambda x: int(round(x / 10000)), self.m)))
         tables[0].add_row(list(map(lambda x: int(round(x / 10000)), self.sig)))
         for i in range(11):
-            tables[1].add_column(f"{i} * 10^(-5)", list(map(lambda x: int(round(x * 10000)), self.p[i])))
-            tables[2].add_column(f"{i} * 10^(-5)", list(map(lambda x: round(x * 1000000, 3), self.f[i])))
-            tables[3].add_column(f"{i} * 10^(-5)", list(map(lambda x: round(x * 1000000, 3), self.lambd[i])))
+            tables[1].add_column(f"{i} * 10^(5)", list(map(lambda x: int(round(x * 10000)), self.p[i])))
+            tables[2].add_column(f"{i} * 10^(5)", list(map(lambda x: round(x * 1000000, 3), self.f[i])))
+            tables[3].add_column(f"{i} * 10^(5)", list(map(lambda x: round(x * 1000000, 3), self.lambd[i])))
         for i in range(4):
             print(tables[i])
-        print(f"T_1c = {int(self.T_1c * 0.001)}")
+        print(f"T_1c = {int(self.T_1c / 1000)}")
