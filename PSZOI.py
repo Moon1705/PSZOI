@@ -20,7 +20,7 @@ class PSZOI:
     def __p_func(self):
         p = []
         for t in range(11):
-            t_i = t * 0.00001
+            t_i = t * 100000
             p_i = [element.p_func(t_i) for element in self.input_data]
             p.append(p_i + [reduce(lambda x, y: x * y, p_i)])
         return p
