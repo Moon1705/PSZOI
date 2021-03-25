@@ -12,7 +12,7 @@ class W:
         return betta * gamma(1 + 1 / alfa)
 
     def sig_func(self, alfa, betta):
-        return betta * math.sqrt(gamma(1 + 2 / alfa) / pow(gamma(1 + 1 / alfa), 2))
+        return betta * math.sqrt(gamma(1 + (2 / alfa)) - pow(gamma(1 + (1 / alfa)), 2))
 
     def p_func(self, t):
         return math.exp(-pow(t / self.betta, self.alfa))

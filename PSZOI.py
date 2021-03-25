@@ -1,7 +1,8 @@
 import math
 from functools import reduce
 from prettytable import PrettyTable
-
+import scipy.integrate as integrate
+import numpy as np
 
 class PSZOI:
     def __init__(self, input_data):
@@ -12,11 +13,14 @@ class PSZOI:
         self.p = self.__p_func()
         self.f = self.__f_func()
         self.lambd = self.__lambd_func()
+        for t in range(11):
+            self.f[t].append(self.p[t][-1] * self.lambd[t][-1])
         
     def __T_1c_func(self):
         h = 100000
-        return (h / 3) * (1 + sum([3 + pow(-1, k) * reduce(lambda x, y: x * y, [element.p_func(k * h) for element in self.input_data]) for k in range(1, 11)]))
-    
+        r = (h / 3) * (1 + sum([3 + (pow(-1, k) * self.input_data[0].p_func(k * h) * self.input_data[1].p_func(k * h) * self.input_data[2].p_func(k * h) * self.input_data[3].p_func(k * h)  * self.input_data[4].p_func(k * h) * self.input_data[5].p_func(k * h)  * self.input_data[6].p_func(k * h) * self.input_data[7].p_func(k * h)) for k in range(1, 11)]))
+        return r
+
     def __p_func(self):
         p = []
         for t in range(11):
@@ -28,21 +32,17 @@ class PSZOI:
     def __f_func(self):
         f = []
         for t in range(11):
-            t_i = t * 10000
+            t_i = t * 100000
             f_i = [element.f_func(t_i) for element in self.input_data]
-            f.append(f_i + [sum(f_i)])
+            f.append(f_i)
         return f
 
     def __lambd_func(self):
         lambd = []
         for t in range(11):
             t_i = t * 10000
-            p_i = [element.p_func(t_i) for element in self.input_data] 
-            p_i += [reduce(lambda x, y: x * y, p_i)]
-            f_i = [element.f_func(t_i) for element in self.input_data]
-            f_i += [sum(f_i)] 
-            lambd_i = [f_i[j] / p_i[j] for j in range(len(self.input_data) + 1)]
-            lambd.append(lambd_i)
+            lambd_i = [self.f[t][j] / self.p[t][j] for j in range(len(self.input_data))]
+            lambd.append(lambd_i + [sum(lambd_i)])
         return lambd
     
     def show(self):
@@ -56,4 +56,4 @@ class PSZOI:
             tables[3].add_column(f"{i} * 10^(5)", list(map(lambda x: round(x * 1000000, 3), self.lambd[i])))
         for i in range(4):
             print(tables[i])
-        print(f"T_1c = {int(self.T_1c / 1000)}")
+        print(f"T_1c = {self.T_1c}")
