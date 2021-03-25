@@ -41,7 +41,14 @@ class PSZOI:
         lambd = []
         for t in range(11):
             t_i = t * 10000
-            lambd_i = [self.f[t][j] / self.p[t][j] for j in range(len(self.input_data))]
+            lambd_i = []
+            for j in range(len(self.input_data)):
+                if self.f[t][j] == 0:
+                    lambd_j = 0
+                else:
+                    lambd_j = self.f[t][j] / self.p[t][j]
+                lambd_i.append(lambd_j)
+            # lambd_i = [self.f[t][j] / self.p[t][j] for j in range(len(self.input_data))]
             lambd.append(lambd_i + [sum(lambd_i)])
         return lambd
     
